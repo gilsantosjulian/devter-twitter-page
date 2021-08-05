@@ -1,8 +1,7 @@
 import React from 'react';
 
 import Head from 'next/head'
-
-import './index.module.css'
+import { fonts } from '../../styles/theme';
 
 const AppLayout = ({ children }) => {
   return (
@@ -18,6 +17,28 @@ const AppLayout = ({ children }) => {
         {children}
       </main>
       <footer></footer>
+
+      <style jsx global>{`
+
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: ${fonts.base}
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+      `}
+      </style>
+
     </>
   );
 }
