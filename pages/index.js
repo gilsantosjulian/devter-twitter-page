@@ -8,10 +8,6 @@ const Home = () => {
         <a className={styles.a} href="https://nextjs.org">devter</a>
       </h1>
 
-      <nav className={styles.nav}>
-        <Link href="/timeline">timeline</Link>
-      </nav>
-
     </>
   )
 }
