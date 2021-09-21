@@ -1,10 +1,8 @@
 import React from 'react';
 
 import Head from 'next/head'
-import { colors, fonts } from '../../styles/theme';
-import { addOpacityToColor } from '../../styles/utils';
+import styles, { globalStyles } from './styles'
 
-const backgroundColor = addOpacityToColor(colors.primary, 0.3)
 
 const AppLayout = ({ children }) => {
   return (
@@ -16,36 +14,17 @@ const AppLayout = ({ children }) => {
       </Head>
 
       <nav></nav>
-      <main>
-        {children}
-      </main>
+      
+      <div>
+        <main>
+          {children}
+        </main>
+      </div>
       <footer></footer>
 
-      <style jsx global>{`
-
-        html,
-        body {
-          background-image:
-            radial-gradient(${backgroundColor} 1px, transparent 1px),
-            radial-gradient(${backgroundColor} 1px, transparent 1px);
-          background-position: 0 0, 25px 25px;
-          background-size: 50px 50px;
-          padding: 0;
-          margin: 0;
-          font-family: ${fonts.base}
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-      `}
-      </style>
+      <style jsx>{styles}</style>
+      <style jsx global>{globalStyles}
+</style>
 
     </>
   );
