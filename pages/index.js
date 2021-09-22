@@ -24,7 +24,7 @@ const Home = () => {
           <div>
             <Button onClick={() => {}}>
               <GitHub width={25} height={25} fill={'#fff'}/>
-              Login with github
+              <span>Login with github</span>
             </Button>
           </div>
         </section>
