@@ -15,13 +15,16 @@ const Button = ({ children, onClick }) => {
         color: #fff;
         cursor: pointer;
         display: flex;
+        flex-direction: row;
         font-size: 16px;
         font-weight: 800;
+        justify-content: space-between;
         padding: 8px 24px;
         transition: opacity .3s ease;
+        width: auto;
       }
 
-      button > :global(svg) {
+      button > :global(svg), :global(span) {
         margin: 0 8px;
       }
 
