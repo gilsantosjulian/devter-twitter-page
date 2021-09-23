@@ -7,7 +7,15 @@ import Button from '../components/Button'
 import { colors } from '../styles/theme'
 import GitHub from '../components/Icons/github'
 
+import { logingWithGitHub } from '../firebase/cilent'
+
 const Home = () => {
+
+  const handleOnClick = async () => {
+
+    const { user } = await logingWithGitHub() 
+    console.log(user)
+  }
   return (
     <>
       <Head>
@@ -22,7 +30,7 @@ const Home = () => {
           <h2>Talk about development <br /> with developers</h2>
 
           <div>
-            <Button onClick={() => {}}>
+            <Button onClick={handleOnClick}>
               <GitHub width={25} height={25} fill={'#fff'}/>
               <span>Login with github</span>
             </Button>
