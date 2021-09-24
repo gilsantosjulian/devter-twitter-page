@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import AppLayout from '../components/AppLayout'
@@ -11,11 +11,12 @@ import { logingWithGitHub } from '../firebase/cilent'
 
 const Home = () => {
 
-  const handleOnClick = async () => {
+  const [user, setUser] = useState(null) 
 
-    const { user } = await logingWithGitHub() 
-    console.log(user)
+  const handleOnClick = async () => {
+    setUser(await logingWithGitHub())
   }
+
   return (
     <>
       <Head>
