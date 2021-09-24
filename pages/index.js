@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import AppLayout from '../components/AppLayout'
@@ -7,11 +7,15 @@ import Button from '../components/Button'
 import { colors } from '../styles/theme'
 import GitHub from '../components/Icons/github'
 
-import { logingWithGitHub } from '../firebase/cilent'
+import { logingWithGitHub, onAuthStateChangedClient } from '../firebase/cilent'
 
 const Home = () => {
 
   const [user, setUser] = useState(null) 
+
+  useEffect(() => {
+    onAuthStateChangedClient(setUser)
+  }, []) 
 
   const handleOnClick = async () => {
     setUser(await logingWithGitHub())
@@ -31,10 +35,20 @@ const Home = () => {
           <h2>Talk about development <br /> with developers</h2>
 
           <div>
-            <Button onClick={handleOnClick}>
-              <GitHub width={25} height={25} fill={'#fff'}/>
-              <span>Login with github</span>
-            </Button>
+            {
+              user === null &&
+              <Button onClick={handleOnClick}>
+                <GitHub width={25} height={25} fill={'#fff'}/>
+                <span>Login with github</span>
+              </Button>
+            }
+            {
+              user && user.avatar && 
+              <div>
+                <img src={user.avatar} />
+                <strong>{user.username}</strong>
+              </div>
+            }
           </div>
         </section>
       </AppLayout>
