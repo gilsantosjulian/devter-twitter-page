@@ -14,9 +14,19 @@ const firebaseConfig = {
   measurementId: "G-VNV8P4YJC4"
 }
 
-firebase.initializeApp(firebaseConfig)
+!firebase.getApps.length && firebase.initializeApp(firebaseConfig)
 
-export const logingWithGitHub = () => {
-  const auth = getAuth();
-  return signInWithPopup(auth, githubProvider)
+export const logingWithGitHub = async () => {
+  try {
+    const auth = getAuth();
+    const { user } = await signInWithPopup(auth, githubProvider)
+    console.log(user);
+    return {
+      avatar: user?.photoURL,
+      username: user.displayName,
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  
 }
