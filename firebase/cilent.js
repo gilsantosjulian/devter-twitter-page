@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app'
-import { getAuth, GithubAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, getAuth, GithubAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 
 const githubProvider = new GithubAuthProvider()
 
@@ -16,15 +16,27 @@ const firebaseConfig = {
 
 !firebase.getApps.length && firebase.initializeApp(firebaseConfig)
 
+const mapUserFromFirebaseAuthToUser = (user) => {
+  return {
+    avatar: user?.photoURL,
+    username: user?.displayName,
+    email: user?.email,
+    emailVerified: user?.emailVerified,
+  }
+}
+
+export const onAuthStateChangedClient = (onChange) => {
+  const auth = getAuth();
+  return onAuthStateChanged(auth, user => {
+    const normalizedUser = mapUserFromFirebaseAuthToUser(user)
+    onChange(normalizedUser)
+  })
+}
+
 export const logingWithGitHub = async () => {
   try {
     const auth = getAuth();
-    const { user } = await signInWithPopup(auth, githubProvider)
-    console.log(user);
-    return {
-      avatar: user?.photoURL,
-      username: user.displayName,
-    }
+    await signInWithPopup(auth, githubProvider)
   } catch (error) {
     console.log(error)
   }
