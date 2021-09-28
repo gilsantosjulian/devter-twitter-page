@@ -10,12 +10,11 @@ import GitHub from '../components/Icons/github'
 import { logingWithGitHub, onAuthStateChangedClient } from '../firebase/cilent'
 
 const Home = () => {
-
-  const [user, setUser] = useState(null) 
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     onAuthStateChangedClient(setUser)
-  }, []) 
+  }, [])
 
   const handleOnClick = async () => {
     setUser(await logingWithGitHub())
@@ -43,7 +42,7 @@ const Home = () => {
               </Button>
             }
             {
-              user && user.avatar && 
+              user && user.avatar &&
               <div>
                 <img src={user.avatar} />
                 <strong>{user.username}</strong>
