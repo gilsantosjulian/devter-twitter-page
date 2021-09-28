@@ -1,8 +1,7 @@
-import React from 'react';
+import React from 'react'
 
 import Head from 'next/head'
 import styles, { globalStyles } from './styles'
-
 
 const AppLayout = ({ children }) => {
   return (
@@ -14,7 +13,7 @@ const AppLayout = ({ children }) => {
       </Head>
 
       <nav></nav>
-      
+
       <div>
         <main>
           {children}
@@ -27,7 +26,7 @@ const AppLayout = ({ children }) => {
 </style>
 
     </>
-  );
+  )
 }
 
-export default AppLayout;
+export default AppLayout
