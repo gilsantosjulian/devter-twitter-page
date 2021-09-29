@@ -1,5 +1,5 @@
 import * as firebase from 'firebase/app'
-import { auth, getAuth, GithubAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
+import { getAuth, GithubAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
 
 const githubProvider = new GithubAuthProvider()
 

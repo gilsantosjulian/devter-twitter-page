@@ -37,7 +37,7 @@ const Home = () => {
             {
               user === null &&
               <Button onClick={handleOnClick}>
-                <GitHub width={25} height={25} fill={'#fff'}/>
+                <GitHub width={25} height={25} fill={'#fff'} />
                 <span>Login with github</span>
               </Button>
             }
