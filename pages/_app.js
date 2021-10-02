@@ -1,13 +1,13 @@
-import AppLayout from '../components/AppLayout'
+import AppLayout from "../components/AppLayout";
 
-import '../styles/globals.css'
+import "../styles/globals.css";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
     <AppLayout>
       <Component {...pageProps} />
     </AppLayout>
-  )
-}
+  );
+};
 
-export default MyApp
+export default MyApp;

@@ -1,53 +1,53 @@
-import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import AppLayout from '../components/AppLayout'
-import Button from '../components/Button'
+import { useEffect, useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import AppLayout from "../components/AppLayout";
+import Button from "../components/Button";
 
-import { colors } from '../styles/theme'
-import GitHub from '../components/Icons/github'
+import { colors } from "../styles/theme";
+import GitHub from "../components/Icons/github";
 
-import { logingWithGitHub, onAuthStateChangedClient } from '../firebase/cilent'
+import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent";
 
 const Home = () => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChangedClient(setUser)
-  }, [])
+    onAuthStateChangedClient(setUser);
+  }, []);
 
   const handleOnClick = async () => {
-    setUser(await logingWithGitHub())
-  }
+    setUser(await logingWithGitHub());
+  };
 
   return (
     <>
       <Head>
         <title>devter</title>
-        <link rel='icon' href="https://nextjs.org"></link>
+        <link rel="icon" href="https://nextjs.org"></link>
       </Head>
 
       <AppLayout>
         <section>
-          <Image src='/devter-logo.png' alt='logo' width={120} height={120} />
+          <Image src="/devter-logo.png" alt="logo" width={120} height={120} />
           <h1>Devter</h1>
-          <h2>Talk about development <br /> with developers</h2>
+          <h2>
+            Talk about development <br /> with developers
+          </h2>
 
           <div>
-            {
-              user === null &&
+            {user === null && (
               <Button onClick={handleOnClick}>
-                <GitHub width={25} height={25} fill={'#fff'} />
+                <GitHub width={25} height={25} fill={"#fff"} />
                 <span>Login with github</span>
               </Button>
-            }
-            {
-              user && user.avatar &&
+            )}
+            {user && user.avatar && (
               <div>
                 <img src={user.avatar} />
                 <strong>{user.username}</strong>
               </div>
-            }
+            )}
           </div>
         </section>
       </AppLayout>
@@ -76,8 +76,7 @@ const Home = () => {
           margin: 0;
         }
       `}</style>
-
     </>
-  )
-}
-export default Home
+  );
+};
+export default Home;
