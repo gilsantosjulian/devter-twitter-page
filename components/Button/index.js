@@ -1,5 +1,4 @@
-
-import { colors } from '../../styles/theme'
+import { colors } from "../../styles/theme";
 
 const Button = ({ children, onClick }) => {
   return (
@@ -20,21 +19,21 @@ const Button = ({ children, onClick }) => {
           font-weight: 800;
           justify-content: space-between;
           padding: 8px 24px;
-          transition: opacity .3s ease;
+          transition: opacity 0.3s ease;
           width: auto;
         }
 
-        button > :global(svg), :global(span) {
+        button > :global(svg),
+        :global(span) {
           margin: 0 8px;
         }
 
         button:hover {
-          opacity: .7;
+          opacity: 0.7;
         }
-    `}</style>
-
+      `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
