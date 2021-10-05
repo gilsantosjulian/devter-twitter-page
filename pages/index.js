@@ -3,6 +3,7 @@ import Head from "next/head"
 import Image from "next/image"
 import AppLayout from "../components/AppLayout"
 import Button from "../components/Button"
+import Avatar from "../components/Avatar"
 
 import { colors } from "../styles/theme"
 import GitHub from "../components/Icons/github"
@@ -20,6 +21,8 @@ const Home = () => {
     setUser(await logingWithGitHub())
   }
 
+  console.log({ user })
+
   return (
     <>
       <Head>
@@ -36,7 +39,7 @@ const Home = () => {
           </h2>
 
           <div>
-            {user === null && (
+            {user === undefined && (
               <Button onClick={handleOnClick}>
                 <GitHub width={25} height={25} fill={"#fff"} />
                 <span>Login with github</span>
@@ -44,7 +47,11 @@ const Home = () => {
             )}
             {user && user.avatar && (
               <div>
-                <img src={user.avatar} />
+                <Avatar
+                  alt={user.username}
+                  src={user.avatar}
+                  text={user.username}
+                />
                 <strong>{user.username}</strong>
               </div>
             )}
