@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import AppLayout from "../components/AppLayout";
-import Button from "../components/Button";
+import { useEffect, useState } from "react"
+import Head from "next/head"
+import Image from "next/image"
+import AppLayout from "../components/AppLayout"
+import Button from "../components/Button"
 
-import { colors } from "../styles/theme";
-import GitHub from "../components/Icons/github";
+import { colors } from "../styles/theme"
+import GitHub from "../components/Icons/github"
 
-import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent";
+import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent"
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    onAuthStateChangedClient(setUser);
-  }, []);
+    onAuthStateChangedClient(setUser)
+  }, [])
 
   const handleOnClick = async () => {
-    setUser(await logingWithGitHub());
-  };
+    setUser(await logingWithGitHub())
+  }
 
   return (
     <>
@@ -77,6 +77,6 @@ const Home = () => {
         }
       `}</style>
     </>
-  );
-};
-export default Home;
+  )
+}
+export default Home
