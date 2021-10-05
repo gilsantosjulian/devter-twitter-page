@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import AppLayout from "../components/AppLayout";
-import Button from "../components/Button";
+import { useEffect, useState } from "react"
+import Head from "next/head"
+import Image from "next/image"
+import AppLayout from "../components/AppLayout"
+import Button from "../components/Button"
+import Avatar from "../components/Avatar"
 
-import { colors } from "../styles/theme";
-import GitHub from "../components/Icons/github";
+import { colors } from "../styles/theme"
+import GitHub from "../components/Icons/github"
 
-import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent";
+import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent"
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
-    onAuthStateChangedClient(setUser);
-  }, []);
+    onAuthStateChangedClient(setUser)
+  }, [])
 
   const handleOnClick = async () => {
-    setUser(await logingWithGitHub());
-  };
+    setUser(await logingWithGitHub())
+  }
+
+  console.log({ user })
 
   return (
     <>
@@ -36,7 +39,7 @@ const Home = () => {
           </h2>
 
           <div>
-            {user === null && (
+            {user === undefined && (
               <Button onClick={handleOnClick}>
                 <GitHub width={25} height={25} fill={"#fff"} />
                 <span>Login with github</span>
@@ -44,7 +47,11 @@ const Home = () => {
             )}
             {user && user.avatar && (
               <div>
-                <img src={user.avatar} />
+                <Avatar
+                  alt={user.username}
+                  src={user.avatar}
+                  text={user.username}
+                />
                 <strong>{user.username}</strong>
               </div>
             )}
@@ -77,6 +84,6 @@ const Home = () => {
         }
       `}</style>
     </>
-  );
-};
-export default Home;
+  )
+}
+export default Home

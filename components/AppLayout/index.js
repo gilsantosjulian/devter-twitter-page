@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"
 
-import Head from "next/head";
-import styles, { globalStyles } from "./styles";
+import Head from "next/head"
+import styles, { globalStyles } from "./styles"
 
 const AppLayout = ({ children }) => {
   return (
@@ -27,7 +27,7 @@ const AppLayout = ({ children }) => {
         {globalStyles}
       </style>
     </>
-  );
-};
+  )
+}
 
-export default AppLayout;
+export default AppLayout

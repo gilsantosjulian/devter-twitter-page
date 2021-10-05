@@ -1,12 +1,12 @@
-import * as firebase from "firebase/app";
+import * as firebase from "firebase/app"
 import {
   getAuth,
   GithubAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
-} from "firebase/auth";
+} from "firebase/auth"
 
-const githubProvider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider()
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -17,9 +17,9 @@ const firebaseConfig = {
   messagingSenderId: "994583765336",
   appId: "1:994583765336:web:0f1587c7d0972a9db0852d",
   measurementId: "G-VNV8P4YJC4",
-};
+}
 
-!firebase.getApps.length && firebase.initializeApp(firebaseConfig);
+!firebase.getApps.length && firebase.initializeApp(firebaseConfig)
 
 const mapUserFromFirebaseAuthToUser = (user) => {
   return {
@@ -27,22 +27,22 @@ const mapUserFromFirebaseAuthToUser = (user) => {
     username: user?.displayName,
     email: user?.email,
     emailVerified: user?.emailVerified,
-  };
-};
+  }
+}
 
 export const onAuthStateChangedClient = (onChange) => {
-  const auth = getAuth();
+  const auth = getAuth()
   return onAuthStateChanged(auth, (user) => {
-    const normalizedUser = mapUserFromFirebaseAuthToUser(user);
-    onChange(normalizedUser);
-  });
-};
+    const normalizedUser = mapUserFromFirebaseAuthToUser(user)
+    onChange(normalizedUser)
+  })
+}
 
 export const logingWithGitHub = async () => {
   try {
-    const auth = getAuth();
-    await signInWithPopup(auth, githubProvider);
+    const auth = getAuth()
+    await signInWithPopup(auth, githubProvider)
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
