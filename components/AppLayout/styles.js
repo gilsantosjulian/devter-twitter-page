@@ -16,12 +16,6 @@ export const globalStyles = css.global`
     margin: 0;
     font-family: ${fonts.base};
   }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
   * {
     box-sizing: border-box;
   }
@@ -33,15 +27,14 @@ export default css`
     height: 100vh;
     place-items: center;
   }
-
   main {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     height: 100%;
+    position: relative;
     width: 100%;
   }
-
   @media (min-width: ${breakpoints.mobile}) {
     main {
       height: 90vh;

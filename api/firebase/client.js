@@ -33,7 +33,7 @@ const mapUserFromFirebaseAuthToUser = (user) => {
 export const onAuthStateChangedClient = (onChange) => {
   const auth = getAuth()
   return onAuthStateChanged(auth, (user) => {
-    const normalizedUser = mapUserFromFirebaseAuthToUser(user)
+    const normalizedUser = user ? mapUserFromFirebaseAuthToUser(user) : null
     onChange(normalizedUser)
   })
 }

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 import Head from "next/head"
-import Image from "next/image"
-import AppLayout from "../components/AppLayout"
-import Button from "../components/Button"
-import Avatar from "../components/Avatar"
 
-import { colors } from "../styles/theme"
-import GitHub from "../components/Icons/github"
+import AppLayout from "components/AppLayout"
+import Avatar from "components/Avatar"
+import Button from "components/Button"
+import Logo from "components/Icons/Logo"
 
-import { logingWithGitHub, onAuthStateChangedClient } from "../firebase/cilent"
+import { colors } from "styles/theme"
+import GitHub from "components/Icons/Github"
+
+import { logingWithGitHub, onAuthStateChangedClient } from "api/firebase/client"
 
 const Home = () => {
   const [user, setUser] = useState(null)
@@ -32,14 +33,14 @@ const Home = () => {
 
       <AppLayout>
         <section>
-          <Image src="/devter-logo.png" alt="logo" width={120} height={120} />
+          <Logo width={100} />
           <h1>Devter</h1>
           <h2>
             Talk about development <br /> with developers
           </h2>
 
           <div>
-            {user === undefined && (
+            {user === null && (
               <Button onClick={handleOnClick}>
                 <GitHub width={25} height={25} fill={"#fff"} />
                 <span>Login with github</span>
@@ -52,7 +53,6 @@ const Home = () => {
                   src={user.avatar}
                   text={user.username}
                 />
-                <strong>{user.username}</strong>
               </div>
             )}
           </div>
@@ -62,6 +62,10 @@ const Home = () => {
       <style jsx>{`
         img {
           width: 120px;
+        }
+
+        div {
+          margin-top: 16px;
         }
 
         section {
@@ -74,6 +78,7 @@ const Home = () => {
         h1 {
           color: ${colors.primary};
           font-weight: 800;
+          font-size: 32px;
           margin-bottom: 16px;
         }
 
