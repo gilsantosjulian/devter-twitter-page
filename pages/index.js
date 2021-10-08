@@ -10,13 +10,19 @@ import { colors } from "styles/theme"
 import GitHub from "components/Icons/Github"
 
 import { logingWithGitHub, onAuthStateChangedClient } from "api/firebase/client"
+import { useRouter } from "next/router"
 
 const Home = () => {
   const [user, setUser] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     onAuthStateChangedClient(setUser)
   }, [])
+
+  useEffect(() => {
+    user && router.replace("/home")
+  }, [user])
 
   const handleOnClick = async () => {
     setUser(await logingWithGitHub())
@@ -55,6 +61,7 @@ const Home = () => {
                 />
               </div>
             )}
+            {user === null && <img src="/spinner.gif" />}
           </div>
         </section>
       </AppLayout>
