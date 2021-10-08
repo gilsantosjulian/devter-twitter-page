@@ -15,7 +15,7 @@ const Devit = ({ avatar, username, message, key }) => {
 
       <style jsx>{`
         article {
-          border-bottom: 2px solid #eaf7ff;
+          border-bottom: 1px solid #eee;
           display: flex;
           padding: 10px 15px;
         }
