@@ -1,4 +1,5 @@
 import * as firebase from "firebase/app"
+import "firebase/firestore"
 import {
   getAuth,
   GithubAuthProvider,
@@ -21,12 +22,16 @@ const firebaseConfig = {
 
 !firebase.getApps.length && firebase.initializeApp(firebaseConfig)
 
+// const db = firebase.firestore()
+
 const mapUserFromFirebaseAuthToUser = (user) => {
+  const { displayName, email, emailVerified, photoURL, uid } = user
   return {
-    avatar: user?.photoURL,
-    username: user?.displayName,
-    email: user?.email,
-    emailVerified: user?.emailVerified,
+    avatar: photoURL,
+    username: displayName,
+    email: email,
+    emailVerified: emailVerified,
+    uid,
   }
 }
 
@@ -45,4 +50,8 @@ export const logingWithGitHub = async () => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const addDevit = ({ avatar, content, userId, userName }) => {
+  // db.collection("devits")
 }
