@@ -1,18 +1,38 @@
+import { useState } from "react"
 import AppLayout from "components/AppLayout"
 import Button from "components/Button"
-
-// import useUser from "hooks/useUser"
+import useUser from "hooks/useUser"
+import { addDevit } from "api/firebase/client"
 
 const ComposeTweet = () => {
-  // const user = useUser()
+  const [message, setMessage] = useState("")
+  const user = useUser()
+
+  const handleChange = (event) => {
+    const { value } = event.target
+    setMessage(value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    addDevit({
+      avatar: user.avatar,
+      content: message,
+      userId: user.uid,
+      userName: user.username,
+    })
+  }
 
   return (
     <>
       <AppLayout>
-        <form>
-          <textarea placeholder="¿Qué está pasando?"></textarea>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            onChange={handleChange}
+            placeholder="¿Qué está pasando?"
+          ></textarea>
           <div>
-            <Button>Devitear</Button>
+            <Button disabled={!message.length}>Devitear</Button>
           </div>
         </form>
       </AppLayout>
