@@ -1,5 +1,5 @@
 import * as firebase from "firebase/app"
-import "firebase/firestore"
+import { addDoc, collection, getFirestore, Timestamp } from "firebase/firestore"
 import {
   getAuth,
   GithubAuthProvider,
@@ -22,7 +22,8 @@ const firebaseConfig = {
 
 !firebase.getApps.length && firebase.initializeApp(firebaseConfig)
 
-// const db = firebase.firestore()
+// Initialize Cloud Firestore through Firebase
+const db = getFirestore()
 
 const mapUserFromFirebaseAuthToUser = (user) => {
   const { displayName, email, emailVerified, photoURL, uid } = user
@@ -52,6 +53,19 @@ export const logingWithGitHub = async () => {
   }
 }
 
-export const addDevit = ({ avatar, content, userId, userName }) => {
-  // db.collection("devits")
+export const addDevit = async ({ avatar, content, userId, userName }) => {
+  try {
+    const docRef = await addDoc(collection(db, "devits"), {
+      avatar,
+      content,
+      userId,
+      userName,
+      createdAt: Timestamp.now(),
+      likesCount: 0,
+      sharedCount: 0,
+    })
+    console.log("Document written with ID: ", docRef.id)
+  } catch (e) {
+    console.error("Error adding document: ", e)
+  }
 }
