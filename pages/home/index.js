@@ -22,14 +22,19 @@ const HomePage = () => {
           <h2>Inicio</h2>
         </header>
         <section>
-          {timeline.map((devit, index) => (
-            <Devit
-              key={`devit-${index}`}
-              username={devit.username}
-              avatar={devit.avatar}
-              message={devit.message}
-            />
-          ))}
+          {timeline.map(
+            ({ avatar, content, createdAt, id, userId, userName }) => (
+              <Devit
+                avatar={avatar}
+                content={content}
+                createdAt={createdAt}
+                key={id}
+                id={id}
+                userId={userId}
+                userName={userName}
+              />
+            )
+          )}
         </section>
 
         <nav></nav>
