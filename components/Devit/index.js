@@ -1,15 +1,19 @@
 import Avatar from "components/Avatar"
 
-const Devit = ({ avatar, username, message, key }) => {
+const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
   return (
     <>
       <article key={key}>
         <div>
-          <Avatar alt={username} src={avatar} />
+          <Avatar alt={userName} src={avatar} />
         </div>
         <section>
-          <strong>{username}</strong>
-          <p>{message}</p>
+          <header>
+            <strong>{userName}</strong>
+            <date>{createdAt}</date>
+          </header>
+
+          <p>{content}</p>
         </section>
       </article>
 

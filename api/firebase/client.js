@@ -83,9 +83,14 @@ export const fetchLatestDevits = async () => {
     querySnapshot.forEach((doc) => {
       const data = doc.data()
       const id = doc.id
+      const { createdAt } = data
+      const normalizedCreatedAt =
+        createdAt.toDate().toDateString() || "Not date"
+
       devits.push({
-        id,
         ...data,
+        id,
+        createdAt: normalizedCreatedAt,
       })
     })
     return devits
