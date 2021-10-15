@@ -1,21 +1,18 @@
 import AppLayout from "components/AppLayout"
 import { useEffect, useState } from "react"
 
+import { fetchLatestDevits } from "api/firebase/client"
 import Devit from "components/Devit"
 import useUser from "hooks/useUser"
 
-const URL = "/api/statuses/home_timeline"
+// const URL = "/api/statuses/home_timeline"
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([])
   const user = useUser()
 
-  useEffect(() => {
-    user &&
-      fetch(URL)
-        .then((res) => res.json())
-        .then(setTimeline)
-        .catch()
+  useEffect(async () => {
+    user && (await fetchLatestDevits().then(setTimeline))
   }, [user])
 
   return (

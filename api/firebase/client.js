@@ -1,5 +1,11 @@
 import * as firebase from "firebase/app"
-import { addDoc, collection, getFirestore, Timestamp } from "firebase/firestore"
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  Timestamp,
+} from "firebase/firestore"
 import {
   getAuth,
   GithubAuthProvider,
@@ -65,7 +71,25 @@ export const addDevit = async ({ avatar, content, userId, userName }) => {
       sharedCount: 0,
     })
     console.log("Document written with ID: ", docRef.id)
-  } catch (e) {
-    console.error("Error adding document: ", e)
+  } catch (error) {
+    console.error("Error adding document: ", error)
+  }
+}
+
+export const fetchLatestDevits = async () => {
+  try {
+    const devits = []
+    const querySnapshot = await getDocs(collection(db, "devits"))
+    querySnapshot.forEach((doc) => {
+      const data = doc.data()
+      const id = doc.id
+      devits.push({
+        id,
+        ...data,
+      })
+    })
+    return devits
+  } catch (error) {
+    console.error("Error fetch devits: ", error)
   }
 }
