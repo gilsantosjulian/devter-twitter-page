@@ -84,8 +84,22 @@ export const fetchLatestDevits = async () => {
       const data = doc.data()
       const id = doc.id
       const { createdAt } = data
-      const normalizedCreatedAt =
-        createdAt.toDate().toDateString() || "Not date"
+
+      const date = new Date(createdAt.toDate())
+
+      const formatOptions = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }
+
+      const normalizedCreatedAt = new Intl.DateTimeFormat(
+        "us-US",
+        formatOptions
+      ).format(date)
 
       devits.push({
         ...data,
