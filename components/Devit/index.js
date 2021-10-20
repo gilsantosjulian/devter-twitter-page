@@ -10,6 +10,7 @@ const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
         <section>
           <header>
             <strong>{userName}</strong>
+            <span> - </span>
             <date>{createdAt}</date>
           </header>
 
@@ -31,6 +32,11 @@ const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
         p {
           line-height: 1.3125;
           margin: 0;
+        }
+
+        date {
+          color: #555;
+          font-size: 14px;
         }
       `}</style>
     </>
