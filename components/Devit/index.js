@@ -1,6 +1,11 @@
 import Avatar from "components/Avatar"
 
+import useTimeAgo from "hooks/useTimeAgo"
+
 const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
+  const timeAgo = useTimeAgo(createdAt)
+  console.log({ timeAgo })
+
   return (
     <>
       <article key={key}>
