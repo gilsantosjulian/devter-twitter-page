@@ -85,26 +85,27 @@ export const fetchLatestDevits = async () => {
       const id = doc.id
       const { createdAt } = data
 
-      const date = new Date(createdAt.toDate())
+      // const date = new Date(createdAt.toDate())
 
-      const formatOptions = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }
+      // const formatOptions = {
+      //   year: "numeric",
+      //   month: "short",
+      //   day: "numeric",
+      //   hour: "2-digit",
+      //   minute: "2-digit",
+      //   hour12: true,
+      // }
 
-      const normalizedCreatedAt = new Intl.DateTimeFormat(
-        "us-US",
-        formatOptions
-      ).format(date)
+      // const normalizedCreatedAt = new Intl.DateTimeFormat(
+      //   "us-US",
+      //   formatOptions
+      // ).format(date)
 
       devits.push({
         ...data,
         id,
-        createdAt: normalizedCreatedAt,
+        // createdAt: normalizedCreatedAt,
+        createdAt: +createdAt.toDate(),
       })
     })
     return devits
