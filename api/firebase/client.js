@@ -4,6 +4,8 @@ import {
   collection,
   getDocs,
   getFirestore,
+  orderBy,
+  query,
   Timestamp,
 } from "firebase/firestore"
 import {
@@ -79,7 +81,9 @@ export const addDevit = async ({ avatar, content, userId, userName }) => {
 export const fetchLatestDevits = async () => {
   try {
     const devits = []
-    const querySnapshot = await getDocs(collection(db, "devits"))
+    const q = query(collection(db, "devits"), orderBy("createdAt", "desc"))
+    const querySnapshot = await getDocs(q)
+
     querySnapshot.forEach((doc) => {
       const data = doc.data()
       const id = doc.id
