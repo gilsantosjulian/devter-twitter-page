@@ -4,7 +4,6 @@ import useTimeAgo from "hooks/useTimeAgo"
 
 const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
   const timeAgo = useTimeAgo(createdAt)
-  console.log({ timeAgo })
 
   return (
     <>
@@ -16,7 +15,7 @@ const Devit = ({ avatar, content, createdAt = "", key, userName }) => {
           <header>
             <strong>{userName}</strong>
             <span> - </span>
-            <date>{createdAt}</date>
+            <date>{timeAgo}</date>
           </header>
 
           <p>{content}</p>
