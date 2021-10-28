@@ -1,8 +1,10 @@
 import AppLayout from "components/AppLayout"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 import { fetchLatestDevits } from "api/firebase/client"
 import Devit from "components/Devit"
+import Create from "components/icons/Create"
 import useUser from "hooks/useUser"
 
 // const URL = "/api/statuses/home_timeline"
@@ -37,7 +39,13 @@ const HomePage = () => {
           )}
         </section>
 
-        <nav></nav>
+        <nav>
+          <Link href="/compose/tweet">
+            <a>
+              <Create height={32} width={32} stroke="#09f" />
+            </a>
+          </Link>
+        </nav>
       </AppLayout>
 
       <style jsx>{`
@@ -53,6 +61,10 @@ const HomePage = () => {
           width: 100%;
         }
 
+        section {
+          flex: 1;
+        }
+
         h2 {
           font-size: 21px;
           font-weight: 800;
@@ -63,9 +75,17 @@ const HomePage = () => {
           background: #fff;
           bottom: 0;
           border-top: 1px solid #eee;
+          display: flex;
           height: 49px;
           position: sticky;
           width: 100%;
+        }
+        nav a {
+          align-items: center;
+          display: flex;
+          flex: 1 1 auto;
+          height: 100%;
+          justify-content: center;
         }
       `}</style>
     </>
