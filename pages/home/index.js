@@ -5,7 +5,12 @@ import { useEffect, useState } from "react"
 import { fetchLatestDevits } from "api/firebase/client"
 import Devit from "components/Devit"
 import Create from "components/icons/Create"
+import Home from "components/icons/Home"
+import Search from "components/icons/Search"
 import useUser from "hooks/useUser"
+import Head from "next/head"
+
+import { colors } from "styles/theme"
 
 // const URL = "/api/statuses/home_timeline"
 
@@ -20,6 +25,9 @@ const HomePage = () => {
   return (
     <>
       <AppLayout>
+        <Head>
+          <title>Inicio / Devter</title>
+        </Head>
         <header>
           <h2>Inicio</h2>
         </header>
@@ -40,6 +48,16 @@ const HomePage = () => {
         </section>
 
         <nav>
+          <Link href="/home">
+            <a>
+              <Home height={32} width={32} stroke="#09f" />
+            </a>
+          </Link>
+          <Link href="/compose/tweet">
+            <a>
+              <Search height={32} width={32} stroke="#09f" />
+            </a>
+          </Link>
           <Link href="/compose/tweet">
             <a>
               <Create height={32} width={32} stroke="#09f" />
@@ -86,6 +104,16 @@ const HomePage = () => {
           flex: 1 1 auto;
           height: 100%;
           justify-content: center;
+        }
+
+        nav a:hover {
+          background: radial-gradient(#0099ff11 15%, transparent 16%);
+          background-size: 180px 180px;
+          background-position: center;
+        }
+
+        nav a:hover > :global(svg) {
+          stroke: ${colors.primary};
         }
       `}</style>
     </>
