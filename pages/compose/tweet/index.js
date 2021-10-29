@@ -1,5 +1,6 @@
 import { useState } from "react"
 import router from "next/router"
+import Head from "next/head"
 
 import { addDevit } from "api/firebase/client"
 import AppLayout from "components/AppLayout"
@@ -46,6 +47,9 @@ const ComposeTweet = () => {
   return (
     <>
       <AppLayout>
+        <Head>
+          <title>Crear un Devit / Devter</title>
+        </Head>
         <form onSubmit={handleSubmit}>
           <textarea
             onChange={handleChange}
