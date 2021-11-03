@@ -14,10 +14,25 @@ const COMPOSE_STATES = {
   ERROR: -1,
 }
 
+const DRAG_IMAGE_STATES = {
+  ERROR: -1,
+  NONE: 0,
+  DRAG_OVER: 1,
+  UPLOADING: 2,
+  COMPLETE: 3,
+}
+
 const ComposeTweet = () => {
   const [message, setMessage] = useState("")
   const [status, setStatus] = useState(COMPOSE_STATES.USER_NOT_KNOW)
+  const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
+  // eslint-disable-next-line no-unused-vars
+  const [task, setTask] = useState(null)
+  // eslint-disable-next-line no-unused-vars
+  const [imageURL, setImgURL] = useState(null)
   const user = useUser()
+
+  console.log({ drag, task, imageURL })
 
   const handleChange = (event) => {
     const { value } = event.target
@@ -42,6 +57,18 @@ const ComposeTweet = () => {
       })
   }
 
+  const handleDragEnter = () => {
+    setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
+  }
+
+  const handleDragLeave = () => {
+    setDrag(DRAG_IMAGE_STATES.NONE)
+  }
+
+  const handleDrop = () => {
+    setDrag(DRAG_IMAGE_STATES.NONE)
+  }
+
   const isButtonDisabled = !message.length || status === COMPOSE_STATES.LOADING
 
   return (
@@ -53,6 +80,9 @@ const ComposeTweet = () => {
         <form onSubmit={handleSubmit}>
           <textarea
             onChange={handleChange}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             placeholder="¿Qué está pasando?"
           ></textarea>
           <div>
