@@ -8,12 +8,15 @@ import {
   query,
   Timestamp,
 } from "firebase/firestore"
+
 import {
   getAuth,
   GithubAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
 } from "firebase/auth"
+
+import { getStorage } from "firebase/storage"
 
 const githubProvider = new GithubAuthProvider()
 
@@ -116,4 +119,11 @@ export const fetchLatestDevits = async () => {
   } catch (error) {
     console.error("Error fetch devits: ", error)
   }
+}
+
+export const uploadImage = (file) => {
+  const ref = getStorage().ref(`/images/${file.name}`)
+  console.log({ ref })
+  const task = ref.put(file)
+  return task
 }
