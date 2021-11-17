@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import router from "next/router"
 import Head from "next/head"
 
-import { addDevit } from "api/firebase/client"
+import { addDevit, uploadImage } from "api/firebase/client"
 import AppLayout from "components/AppLayout"
 import Button from "components/Button"
 import useUser from "hooks/useUser"
@@ -34,6 +34,18 @@ const ComposeTweet = () => {
 
   console.log({ drag, task, imageURL })
 
+  useEffect(() => {
+    if (task) {
+      const onProgress = () => {}
+      const onError = () => {}
+      const onComplete = () => {
+        console.log("onComplete")
+      }
+
+      task.on("state_changed", onError, onProgress, onComplete)
+    }
+  }, [task])
+
   const handleChange = (event) => {
     const { value } = event.target
     setMessage(value)
@@ -57,16 +69,22 @@ const ComposeTweet = () => {
       })
   }
 
-  const handleDragEnter = () => {
+  const handleDragEnter = (event) => {
+    event.preventDefault()
     setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
   }
 
-  const handleDragLeave = () => {
+  const handleDragLeave = (event) => {
+    event.preventDefault()
     setDrag(DRAG_IMAGE_STATES.NONE)
   }
 
-  const handleDrop = () => {
+  const handleDrop = (event) => {
+    event.preventDefault()
     setDrag(DRAG_IMAGE_STATES.NONE)
+    const file = event.dataTransfer.files[0]
+    const task = uploadImage(file)
+    setDrag(task)
   }
 
   const isButtonDisabled = !message.length || status === COMPOSE_STATES.LOADING
@@ -95,8 +113,15 @@ const ComposeTweet = () => {
           padding: 15px;
         }
 
+        form {
+          padding: 10px;
+        }
+
         textarea {
-          border: 0;
+          border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
+            ? "3px dashed #09f"
+            : "3px solid transparent"};
+          border-radius: 10px;
           font-size: 21px;
           min-height: 200px;
           outline: 0;
