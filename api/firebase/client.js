@@ -16,7 +16,7 @@ import {
   signInWithPopup,
 } from "firebase/auth"
 
-import { getStorage } from "firebase/storage"
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage"
 
 const githubProvider = new GithubAuthProvider()
 
@@ -122,8 +122,8 @@ export const fetchLatestDevits = async () => {
 }
 
 export const uploadImage = (file) => {
-  const ref = getStorage().ref(`/images/${file.name}`)
-  console.log({ ref })
-  const task = ref.put(file)
-  return task
+  const storage = getStorage()
+  const storageRef = ref(storage, `/images/${file.name}`)
+  const uploadTask = uploadBytesResumable(storageRef, file)
+  return uploadTask
 }
