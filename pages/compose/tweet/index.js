@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getDownloadURL } from "firebase/storage"
 import router from "next/router"
 import Head from "next/head"
 
@@ -36,13 +37,46 @@ const ComposeTweet = () => {
 
   useEffect(() => {
     if (task) {
-      const onProgress = () => {}
-      const onError = () => {}
+      // const onProgress = () => {}
+      // const onError = () => {}
+      // eslint-disable-next-line no-unused-vars
       const onComplete = () => {
         console.log("onComplete")
+        task.snapshot.ref.getDownloadURL().then(setImgURL)
       }
 
-      task.on("state_changed", onError, onProgress, onComplete)
+      // task.on("state_changed", onError, onProgress, onComplete)
+
+      task.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log("Upload is " + progress + "% done")
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused")
+              break
+            case "running":
+              console.log("Upload is running")
+              break
+          }
+        },
+        // eslint-disable-next-line node/handle-callback-err
+        (error) => {
+          console.log("unsuccesfull upload")
+        },
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          console.log("onComplete")
+          getDownloadURL(task.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL)
+          })
+        }
+      )
     }
   }, [task])
 
@@ -50,6 +84,8 @@ const ComposeTweet = () => {
     const { value } = event.target
     setMessage(value)
   }
+
+  console.log({ imageURL })
 
   const handleSubmit = (event) => {
     event.preventDefault()
