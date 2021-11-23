@@ -64,16 +64,17 @@ export const logingWithGitHub = async () => {
   }
 }
 
-export const addDevit = async ({ avatar, content, userId, userName }) => {
+export const addDevit = async ({ avatar, content, img, userId, userName }) => {
   try {
     const docRef = await addDoc(collection(db, "devits"), {
       avatar,
       content,
-      userId,
-      userName,
       createdAt: Timestamp.now(),
+      img,
       likesCount: 0,
       sharedCount: 0,
+      userId,
+      userName,
     })
     console.log("Document written with ID: ", docRef.id)
   } catch (error) {
