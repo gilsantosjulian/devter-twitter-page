@@ -27,13 +27,9 @@ const ComposeTweet = () => {
   const [message, setMessage] = useState("")
   const [status, setStatus] = useState(COMPOSE_STATES.USER_NOT_KNOW)
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
-  // eslint-disable-next-line no-unused-vars
   const [task, setTask] = useState(null)
-  // eslint-disable-next-line no-unused-vars
   const [imageURL, setImgURL] = useState(null)
   const user = useUser()
-
-  console.log({ drag, task, imageURL })
 
   useEffect(() => {
     if (task) {
@@ -68,39 +64,6 @@ const ComposeTweet = () => {
       }
 
       task.on("state_changed", onProgress, onError, onComplete)
-
-      console.log({ task })
-
-      // task.on(
-      //   "state_changed",
-      //   (snapshot) => {
-      //     // Observe state change events such as progress, pause, and resume
-      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      //     const progress =
-      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      //     console.log("Upload is " + progress + "% done")
-      //     switch (snapshot.state) {
-      //       case "paused":
-      //         console.log("Upload is paused")
-      //         break
-      //       case "running":
-      //         console.log("Upload is running")
-      //         break
-      //     }
-      //   },
-      //   // eslint-disable-next-line node/handle-callback-err
-      //   (error) => {
-      //     console.log("unsuccesfull upload")
-      //   },
-      //   () => {
-      //     // Handle successful uploads on complete
-      //     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-      //     console.log("onComplete")
-      //     getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-      //       console.log("File available at", downloadURL)
-      //     })
-      //   }
-      // )
     }
   }, [task])
 
@@ -108,8 +71,6 @@ const ComposeTweet = () => {
     const { value } = event.target
     setMessage(value)
   }
-
-  console.log({ imageURL })
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -119,6 +80,7 @@ const ComposeTweet = () => {
       content: message,
       userId: user.uid,
       userName: user.username,
+      img: imageURL,
     })
       .then(() => {
         router.push("/home")
@@ -163,7 +125,12 @@ const ComposeTweet = () => {
             onDrop={handleDrop}
             placeholder="¿Qué está pasando?"
           ></textarea>
-          {imageURL && <img src={imageURL} />}
+          {imageURL && (
+            <section>
+              <button onClick={() => setImgURL(null)}>x</button>
+              <img src={imageURL} />
+            </section>
+          )}
           <div>
             <Button disabled={isButtonDisabled}>Devitear</Button>
           </div>
@@ -172,6 +139,24 @@ const ComposeTweet = () => {
       <style jsx>{`
         div {
           padding: 15px;
+        }
+
+        button {
+          background: rgba(0, 0, 0, 0.3);
+          border: 0;
+          border-radius: 999px;
+          color: #fff;
+          cursor: pointer;
+          font-size: 24px;
+          left: 15px;
+          height: 32px;
+          position: absolute;
+          top: 15px;
+          width: 32px;
+        }
+
+        section {
+          position: relative;
         }
 
         form {
