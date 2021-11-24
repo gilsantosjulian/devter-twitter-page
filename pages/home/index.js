@@ -34,13 +34,14 @@ const HomePage = () => {
         <section>
           {timeline &&
             timeline.map(
-              ({ avatar, content, createdAt, id, userId, userName }) => (
+              ({ avatar, content, createdAt, id, img, userId, userName }) => (
                 <Devit
                   avatar={avatar}
                   content={content}
                   createdAt={createdAt}
                   key={id}
-                  id={id}
+                  id={id ?? userId}
+                  img={img}
                   userId={userId}
                   userName={userName}
                 />
