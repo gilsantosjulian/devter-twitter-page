@@ -7,6 +7,7 @@ import { addDevit, uploadImage } from "api/firebase/client"
 import AppLayout from "components/AppLayout"
 import Button from "components/Button"
 import useUser from "hooks/useUser"
+import Avatar from "components/Avatar"
 
 const COMPOSE_STATES = {
   USER_NOT_KNOW: 0,
@@ -117,24 +118,31 @@ const ComposeTweet = () => {
         <Head>
           <title>Crear un Devit / Devter</title>
         </Head>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            onChange={handleChange}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            placeholder="¿Qué está pasando?"
-          ></textarea>
-          {imageURL && (
-            <section>
-              <button onClick={() => setImgURL(null)}>x</button>
-              <img src={imageURL} />
+        <section className="form-container">
+          {user && (
+            <section className="avatar-container">
+              <Avatar src={user.avatar} />
             </section>
           )}
-          <div>
-            <Button disabled={isButtonDisabled}>Devitear</Button>
-          </div>
-        </form>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              onChange={handleChange}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              placeholder="¿Qué está pasando?"
+            ></textarea>
+            {imageURL && (
+              <section className="remove-img">
+                <button onClick={() => setImgURL(null)}>x</button>
+                <img src={imageURL} />
+              </section>
+            )}
+            <div>
+              <Button disabled={isButtonDisabled}>Devitear</Button>
+            </div>
+          </form>
+        </section>
       </AppLayout>
       <style jsx>{`
         div {
@@ -155,7 +163,17 @@ const ComposeTweet = () => {
           width: 32px;
         }
 
-        section {
+        .avatar-container {
+          padding-top: 20px;
+          padding-left: 10px;
+        }
+
+        .form-container {
+          align-items: flex-start;
+          display: flex;
+        }
+
+        .remove-img {
           position: relative;
         }
 
