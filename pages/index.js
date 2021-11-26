@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import Head from "next/head"
 
-import AppLayout from "components/AppLayout"
 import Avatar from "components/Avatar"
 import Button from "components/Button"
 import Logo from "components/Icons/Logo"
@@ -32,34 +31,32 @@ const Home = () => {
         <link rel="icon" href="https://nextjs.org"></link>
       </Head>
 
-      <AppLayout>
-        <section>
-          <Logo width={100} />
-          <h1>Devter</h1>
-          <h2>
-            Talk about development <br /> with developers
-          </h2>
+      <section>
+        <Logo width={100} />
+        <h1>Devter</h1>
+        <h2>
+          Talk about development <br /> with developers
+        </h2>
 
-          <div>
-            {user === USER_STATES.NOT_LOGGED && (
-              <Button onClick={handleOnClick}>
-                <GitHub width={25} height={25} fill={"#fff"} />
-                <span>Login with github</span>
-              </Button>
-            )}
-            {user && user.avatar && (
-              <div>
-                <Avatar
-                  alt={user.username}
-                  src={user.avatar}
-                  text={user.username}
-                />
-              </div>
-            )}
-            {user === USER_STATES.NOT_KNOW && <img src="/spinner.gif" />}
-          </div>
-        </section>
-      </AppLayout>
+        <div>
+          {user === USER_STATES.NOT_LOGGED && (
+            <Button onClick={handleOnClick}>
+              <GitHub width={25} height={25} fill={"#fff"} />
+              <span>Login with github</span>
+            </Button>
+          )}
+          {user && user.avatar && (
+            <div>
+              <Avatar
+                alt={user.username}
+                src={user.avatar}
+                text={user.username}
+              />
+            </div>
+          )}
+          {user === USER_STATES.NOT_KNOW && <img src="/spinner.gif" />}
+        </div>
+      </section>
 
       <style jsx>{`
         img {
