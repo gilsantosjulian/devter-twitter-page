@@ -1,8 +1,13 @@
 import Devit from "components/Devit"
 
 import { firestore } from "api/firebase/admin"
+import { useRouter } from "next/router"
 
 const DevitPage = (props) => {
+  const router = useRouter()
+
+  if (router.isFallback) return <h1>Cargando ...</h1>
+
   return (
     <>
       <Devit {...props} />
