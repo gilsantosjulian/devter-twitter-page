@@ -27,25 +27,40 @@ export async function getStaticProps(context) {
   const { params } = context
   const { id } = params
 
-  return firestore
-    .collection("devits")
-    .doc(id)
-    .get()
-    .then((doc) => {
-      const data = doc.data()
-      const id = doc.id
-      const { createdAt } = data
+  try {
+    const response = await firestore.collection("devits").doc(id).get()
+    const data = response.data()
+    const { createdAt, userId } = data
+    const props = {
+      ...data,
+      id: userId,
+      createdAt: +createdAt.toDate(),
+    }
 
-      const props = {
-        ...data,
-        id,
-        createdAt: +createdAt.toDate(),
-      }
-      return { props }
-    })
-    .catch(() => {
-      return { props: {} }
-    })
+    return { props }
+  } catch (error) {
+    console.log(error)
+  }
+
+  // return firestore
+  //   .collection("devits")
+  //   .doc(id)
+  //   .get()
+  //   .then((doc) => {
+  //     const data = doc.data()
+  //     const id = doc.id
+  //     const { createdAt } = data
+
+  //     const props = {
+  //       ...data,
+  //       id,
+  //       createdAt: +createdAt.toDate(),
+  //     }
+  //     return { props }
+  //   })
+  //   .catch(() => {
+  //     return { props: {} }
+  //   })
 }
 
 // export async function getServerSideProps(context) {
