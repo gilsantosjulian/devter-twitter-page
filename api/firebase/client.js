@@ -2,8 +2,9 @@ import * as firebase from "firebase/app"
 import {
   addDoc,
   collection,
-  getDocs,
   getFirestore,
+  limit,
+  onSnapshot,
   orderBy,
   query,
   Timestamp,
@@ -82,45 +83,49 @@ export const addDevit = async ({ avatar, content, img, userId, userName }) => {
   }
 }
 
-export const fetchLatestDevits = async () => {
-  try {
-    const devits = []
-    const q = query(collection(db, "devits"), orderBy("createdAt", "desc"))
-    const querySnapshot = await getDocs(q)
+const mapDevitFromFirebaseToDevitObject = (doc) => {
+  const data = doc.data()
+  const id = doc.id
+  const { createdAt } = data
 
-    querySnapshot.forEach((doc) => {
-      const data = doc.data()
-      const id = doc.id
-      const { createdAt } = data
-
-      // const date = new Date(createdAt.toDate())
-
-      // const formatOptions = {
-      //   year: "numeric",
-      //   month: "short",
-      //   day: "numeric",
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      //   hour12: true,
-      // }
-
-      // const normalizedCreatedAt = new Intl.DateTimeFormat(
-      //   "us-US",
-      //   formatOptions
-      // ).format(date)
-
-      devits.push({
-        ...data,
-        id,
-        // createdAt: normalizedCreatedAt,
-        createdAt: +createdAt.toDate(),
-      })
-    })
-    return devits
-  } catch (error) {
-    console.error("Error fetch devits: ", error)
+  return {
+    ...data,
+    id,
+    createdAt: +createdAt.toDate(),
   }
 }
+
+export const listenLatestDevits = (callback) => {
+  const q = query(
+    collection(db, "devits"),
+    orderBy("createdAt", "desc"),
+    limit(20)
+  )
+
+  onSnapshot(q, (querySnapshot) => {
+    const newDevits = []
+    querySnapshot.forEach((doc) => {
+      newDevits.push(mapDevitFromFirebaseToDevitObject(doc))
+    })
+    callback(newDevits)
+  })
+}
+
+// export const fetchLatestDevits = async () => {
+//   try {
+//     const devits = []
+//     const q = query(collection(db, "devits"), orderBy("createdAt", "desc"))
+//     const querySnapshot = await getDocs(q)
+
+//     querySnapshot.forEach((doc) => {
+//       devits.push(mapDevitFromFirebaseToDevitObject(doc))
+//     })
+
+//     return devits
+//   } catch (error) {
+//     console.error("Error fetch devits: ", error)
+//   }
+// }
 
 export const uploadImage = (file) => {
   const storage = getStorage()
