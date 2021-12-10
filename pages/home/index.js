@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-import { fetchLatestDevits } from "api/firebase/client"
+import { listenLatestDevits } from "api/firebase/client"
 import Devit from "components/Devit"
 import Create from "components/icons/Create"
 import Home from "components/icons/Home"
@@ -18,8 +18,13 @@ const HomePage = () => {
   const user = useUser()
 
   useEffect(async () => {
-    user && (await fetchLatestDevits().then(setTimeline))
+    if (user) {
+      await listenLatestDevits(setTimeline)
+    }
+    // user && (await fetchLatestDevits().then(setTimeline))
   }, [user])
+
+  console.log({ timeline })
 
   return (
     <>
