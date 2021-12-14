@@ -1,12 +1,25 @@
 import { DEFAULT_LANGUAGE } from "constants/locale"
 
-const useDateTimeFormat = (timestamp) => {
+const isDateTimeFormatSupported =
+  typeof Intl !== "undefined" && Intl.DateTimeFormat
+
+export const formatDate = (timestamp, { language = DEFAULT_LANGUAGE } = {}) => {
   const date = new Date(timestamp)
-  const language = DEFAULT_LANGUAGE
+
+  if (!isDateTimeFormatSupported) {
+    const options = {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }
+
+    return date.toLocaleDateString(language, options)
+  }
 
   const options = {
     year: "numeric",
-    month: "short",
+    month: "numeric",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
@@ -16,4 +29,6 @@ const useDateTimeFormat = (timestamp) => {
   return new Intl.DateTimeFormat(language, options).format(date)
 }
 
-export default useDateTimeFormat
+export default function useDateTimeFormat(timestamp) {
+  return formatDate(timestamp, { language: DEFAULT_LANGUAGE })
+}
