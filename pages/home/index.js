@@ -18,9 +18,12 @@ const HomePage = () => {
   const user = useUser()
 
   useEffect(async () => {
+    let unsubscribe
     if (user) {
-      await listenLatestDevits(setTimeline)
+      unsubscribe = listenLatestDevits(setTimeline)
     }
+
+    return () => unsubscribe()
     // user && (await fetchLatestDevits().then(setTimeline))
   }, [user])
 
