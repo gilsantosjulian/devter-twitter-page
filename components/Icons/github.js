@@ -1,6 +1,6 @@
 import * as React from "react"
 
-const GitHub = ({ fill, width, height, ...props }) => {
+export default function GitHub({ fill, width, height, ...props }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,5 +13,3 @@ const GitHub = ({ fill, width, height, ...props }) => {
     </svg>
   )
 }
-
-export default GitHub
