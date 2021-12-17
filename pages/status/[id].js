@@ -17,8 +17,15 @@ const DevitPage = (props) => {
 }
 
 export async function getStaticPaths() {
+  const response = await firestore.collection("devits").get()
+  const devits = response.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+  const paths = devits.map((devit) => ({
+    params: { id: devit.id },
+  }))
+
   return {
-    paths: [{ params: { id: "2v6O59t32Pr9Kxt1cykC" } }],
+    paths,
     fallback: true,
   }
 }
@@ -29,7 +36,7 @@ export async function getStaticProps(context) {
 
   try {
     const response = await firestore.collection("devits").doc(id).get()
-    const data = response.data()
+    const data = response?.data()
     const { createdAt, userId } = data
     const props = {
       ...data,
