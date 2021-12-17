@@ -3,7 +3,7 @@ import Head from "next/head"
 
 import Avatar from "components/Avatar"
 import Button from "components/Button"
-import GitHub from "components/Icons/GitHub"
+import Github from "components/Icons/Github"
 import Logo from "components/Icons/Logo"
 
 import { colors } from "styles/theme"
@@ -41,7 +41,7 @@ const Home = () => {
         <div>
           {user === USER_STATES.NOT_LOGGED && (
             <Button onClick={handleOnClick}>
-              <GitHub width={25} height={25} fill={"#fff"} />
+              <Github width={25} height={25} fill={"#fff"} />
               <span>Login with github</span>
             </Button>
           )}
