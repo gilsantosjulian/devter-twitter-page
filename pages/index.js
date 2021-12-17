@@ -3,10 +3,10 @@ import Head from "next/head"
 
 import Avatar from "components/Avatar"
 import Button from "components/Button"
+import GitHub from "components/Icons/GitHub"
 import Logo from "components/Icons/Logo"
 
 import { colors } from "styles/theme"
-import GitHub from "components/Icons/Github"
 
 import { logingWithGitHub } from "api/firebase/client"
 import { useRouter } from "next/router"
